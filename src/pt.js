@@ -1,29 +1,69 @@
-var products = [];
-
-function addProduct(){
-    var product = insertJson();
-    products.push(product);
-    console.log(products);
-    table = document.getElementById("table");
-    var row = table.insertRow(-1);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    for (var i=0; i<products.length; i++){
-        cell1.innerHTML = products[i].prod_id;
-        cell2.innerHTML = products[i].prod_name;
-        cell3.innerHTML = products[i].prod_price;
+var mul = [];
+flag = 0;
+function aP(){
+    var product = fn();
+    if (flag == 0){
+        mul.push(product);
+        display(mul);
     }
 }
 
-function insertJson(){
-    var p_id = document.getElementById('p_id').value;
-    var p_name = document.getElementById('p_name').value;
-    var p_price = document.getElementById('p_price').value;
-    console.log(p_id,p_name,p_price);
-    return {
-        'prod_id' : p_id,
-        'prod_name' : p_name,
-        'prod_price' : p_price
+function fn(){
+    var pi = document.getElementById('pi').value;
+    var pnam = document.getElementById('pnam').value;
+    var pp = document.getElementById('pp').value;
+    
+    if (cv(pi, pnam, pp) && iprove(pi, mul)){
+        flag = 0;
+        return {
+            'prod_id' : pi,
+            'prod_name' : pnam,
+            'prod_price' : pp
+        };
     }
+    else{
+        window.alert('Enter Valid Input');
+        flag = 1;
+    }
+    
+    
+}
+
+function iprove(pi, mul){
+    for (var i = 0; i<mul.length; i++){
+        if (pi == mul[i].prod_id){
+            return false;
+        }
+    }
+    return true;
+}
+
+function cv(pi, pnam, pp){
+    if (pi == "" || pnam == "" || pp == "" || isNaN(pp)){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+function display(mul){
+
+    var html = '<tr>\
+        <th>Product Id</th>\
+        <th>Product Name</th>\
+        <th>Product Price</th>\
+    </tr> ';
+
+    for (var i=0; i < mul.length; i++){
+        html += '<tr>\
+        <td>'+mul[i].prod_id+'</td>\
+        <td>'+mul[i].prod_name+'</td>\
+        <td>'+mul[i].prod_price+'</td>\
+    </tr>'
+    }
+    document.getElementById('table').innerHTML = html;
+}
+
+function editForm(){
+
 }
